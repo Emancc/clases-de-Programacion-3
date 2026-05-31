@@ -58,7 +58,7 @@ function CreateNotePage() {
           <div className="flex flex-col">
             <label className="text-zinc-400">Category</label>
             <select
-              className="cursor-pointer p-2 border border-zinc-600 rounded-md my-4"
+              className="cursor-pointer p-2 border border-zinc-600 rounded-md my-4 bg-zinc-800 text-white"
               value={formData.category_id}
               onChange={(e) =>
                 setFormData({

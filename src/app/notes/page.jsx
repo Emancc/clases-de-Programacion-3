@@ -23,7 +23,6 @@ export default function page() {
           </Link>
         </div>
 
-        {/* Seccion que muestre mis notas */}
         {notes.map((note, key) => (
           <NoteCard key={key} note={note} />
         ))}

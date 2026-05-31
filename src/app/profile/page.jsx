@@ -7,11 +7,11 @@ export default function Page() {
     <main className="flex flex-col items-center pt-10">
       <section className="w-full max-w-3xl flex flex-col items-center bg-zinc-800 rounded-lg p-10">
         <img
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          src="https://avatars.githubusercontent.com/u/105328792?v=4"
           className="h-24 w-24 rounded-full"
           alt=""
         />
-        <h1 className="text-3xl font-bold">Valentino</h1>
+        <h1 className="text-3xl font-bold">Emanzha</h1>
         <p className="text-gray-400">
           Desarrollador Fullstack especializado en React y Node.js
         </p>

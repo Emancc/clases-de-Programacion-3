@@ -143,7 +143,7 @@ export default function NoteDetail({ note }) {
             )}
           </button>
         </div>
-        <div className="mt-2 group text-green-500">
+        <div className="mt-2 group text-violet-500">
           {editingFiled === "ejemplo" ? (
             <textarea
               value={formData.ejemplo}
@@ -151,7 +151,7 @@ export default function NoteDetail({ note }) {
                 setFormData({ ...formData, ejemplo: e.target.value })
               }
               autoFocus
-              className="text-sm min-h-64 bg-black rounded p-2 overflow-x-auto w-full focus:outline-none focus:ring-2 ring-green-200 font-mono resize-none"
+              className="text-sm min-h-64 bg-zinc-900 rounded p-2 overflow-x-auto w-full focus:outline-none focus:ring-2 ring-green-200 font-mono resize-none text-white"
             />
           ) : (
             <pre className="text-sm min-h-64 bg-black rounded p-2 overflow-x-auto">
