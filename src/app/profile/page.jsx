@@ -1,4 +1,5 @@
 import { getProjects } from "@/lib/projects";
+import Image from "next/image";
 
 export default function Page() {
   const projects = getProjects();
@@ -6,12 +7,14 @@ export default function Page() {
   return (
     <main className="flex flex-col items-center pt-10">
       <section className="w-full max-w-3xl flex flex-col items-center bg-zinc-800 rounded-lg p-10">
-        <img
-          src="https://avatars.githubusercontent.com/u/105328792?v=4"
-          className="h-24 w-24 rounded-full"
+        <Image
+          src="/images/eman-about.jpeg"
+          className="h-64 w-64 rounded-full object-cover mb-4"
           alt=""
+          width={202}
+          height={202}
         />
-        <h1 className="text-3xl font-bold">Emanzha</h1>
+        <h1 className="text-3xl font-bold">Emanuel</h1>
         <p className="text-gray-400">
           Desarrollador Fullstack especializado en React y Node.js
         </p>
