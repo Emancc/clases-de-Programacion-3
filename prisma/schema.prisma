@@ -29,8 +29,8 @@ model Category {
 model Note {
   id        Int      @id @default(autoincrement())
   title     String
-  ejemplo   String
-  content   String
+  ejemplo   String?
+  content   String?
   createdAt DateTime @default(now())
 
   categoryId Int?
