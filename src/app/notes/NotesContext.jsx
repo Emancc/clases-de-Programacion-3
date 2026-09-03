@@ -1,8 +1,6 @@
+"use client";
 import { createContext, useContext, useState, useEffect } from "react";
-import {
-  notes as defaultNotes,
-  categories as defaultCategories,
-} from "@/lib/notes";
+import axios from "axios";
 
 const NotesContext = createContext();
 
@@ -12,74 +10,64 @@ export function NotesProvider({ children }) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
+    const fetchInitialData = async () => {
+      try {
+        const [notesRes, categoriesRes] = await Promise.all([
+          axios.get("/api/notes"),
+          axios.get("/api/categories"),
+        ]);
 
-    const savedNotes = window.localStorage.getItem("my_notes");
-    const savedCategories = window.localStorage.getItem("my_categories");
-
-    if (savedNotes) {
-      setNotes(JSON.parse(savedNotes));
-    } else {
-      window.localStorage.setItem("my_notes", JSON.stringify(defaultNotes));
-      setNotes(savedNotes);
-    }
-
-    if (savedCategories) {
-      setCategories(JSON.parse(savedCategories));
-    } else {
-      window.localStorage.setItem(
-        "my_categories",
-        JSON.stringify(defaultCategories),
-      );
-      setCategories(savedCategories);
-    }
+        setNotes(notesRes.data);
+        setCategories(categoriesRes.data);
+      } catch (err) {
+        console.err("Error al obtener los datos", err);
+      } finally {
+        setIsMounted(true);
+      }
+    };
+    fetchInitialData();
   }, []);
 
-  const saveNotes = (newNotes) => {
-    setNotes(newNotes);
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem("my_notes", JSON.stringify(newNotes));
+  const addNote = async (note) => {
+    try {
+      const response = await axios.post("/api/notes", note);
+      setNotes((prevNotes) => [response.data, ...prevNotes]);
+    } catch (err) {
+      console.error("error al crear la nota", err);
     }
   };
 
-  const saveCategories = (newCategories) => {
-    setCategories(newCategories);
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(
-        "my_categories",
-        JSON.stringify(newCategories),
+  const updateNote = async (id, updatedFields) => {
+    try {
+      const response = await axios.put(`/api/notes/${id}`, updatedFields);
+      setNotes((prevNotes) =>
+        prevNotes.map((note) =>
+          String(id) === String(note.id) ? response.data : note,
+        ),
       );
+    } catch (err) {
+      console.error("error al actualizar la nora", err);
     }
   };
 
-  const addNote = (note) => {
-    const newNote = {
-      ...note,
-      id: crypto.randomUUID(),
-      createdAt: new Date().toISOString().split("T")[0],
-    };
-    const newNotes = [...notes, newNote];
-    saveNotes(newNotes);
+  const deleteNote = async (id) => {
+    try {
+      await axios.delete(`/api/notes/${id}`);
+      setNotes((prevNotes) =>
+        prevNotes.filter((note) => String(note.id) !== String(id)),
+      );
+    } catch (err) {
+      console.error("Error al borrar la nota", err);
+    }
   };
 
-  const updateNote = (id, updatedFields) => {
-    const updatedNote = notes.map((note) =>
-      String(note.id) === String(id) ? { ...note, ...updatedFields } : note,
-    );
-    saveNotes(updatedNote);
-  };
-
-  const deleteNote = (id) => {
-    const filteredNotes = notes.filter((note) => note.id !== id);
-    saveNotes(filteredNotes);
-  };
-
-  const addCategories = (title) => {
-    const newCategory = {
-      id: crypto.randomUUID(),
-      title,
-    };
-    saveCategories([...categories, newCategory]);
+  const addCategories = async (title) => {
+    try {
+      const response = await axios.post("/api/categories", { title });
+      setCategories((prevCategories) => [...prevCategories, response.data]);
+    } catch (err) {
+      console.error("Error al crear la categria", err);
+    }
   };
 
   const getNoteById = (id) =>
@@ -89,7 +77,7 @@ export function NotesProvider({ children }) {
     return categories.map((category) => ({
       ...category,
       notes: notes.filter(
-        (note) => String(note.category_id) === String(category.id),
+        (note) => String(note.categoryId) === String(category.id),
       ),
     }));
   };

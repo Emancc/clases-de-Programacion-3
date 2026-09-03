@@ -17,7 +17,7 @@ function CreateNotePage() {
     title: "",
     content: "",
     ejemplo: "",
-    category_id: 1,
+    categoryId: 1,
   });
 
   const handleSubmit = (e) => {
@@ -59,11 +59,11 @@ function CreateNotePage() {
             <label className="text-zinc-400">Category</label>
             <select
               className="cursor-pointer p-2 border border-zinc-600 rounded-md my-4 bg-zinc-800 text-white"
-              value={formData.category_id}
+              value={formData.categoryId}
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  category_id: String(e.target.value),
+                  categoryId: String(e.target.value),
                 })
               }
             >
