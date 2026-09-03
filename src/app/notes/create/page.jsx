@@ -67,6 +67,7 @@ function CreateNotePage() {
                 })
               }
             >
+              <option disabled={true}>Select Category</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.title}

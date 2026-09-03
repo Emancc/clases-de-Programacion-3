@@ -1,10 +1,22 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-
+import { createOrUpdateCurrentUser } from "@/lib/currentUser";
 export async function GET() {
   try {
+    const user = await createOrUpdateCurrentUser();
+
+    if (!user) {
+      return NextResponse.json({ error: "no auth" }, { status: 401 });
+    }
+
     const notes = await db.note.findMany({
-      include: { category: true },
+      where: {
+        userId: user.id,
+      },
+      include: {
+        category: true,
+        user: true,
+      },
       orderBy: { createdAt: "desc" },
     });
     return NextResponse.json(notes);
@@ -18,6 +30,11 @@ export async function GET() {
 
 export async function POST(request) {
   try {
+    const user = await createOrUpdateCurrentUser();
+    if (!user) {
+      return NextResponse.json({ error: "no auth" }, { status: 401 });
+    }
+
     const data = await request.json();
     const categoryId = parseInt(data.categoryId);
     if (!data.title || !data.content || isNaN(categoryId)) {
@@ -35,6 +52,7 @@ export async function POST(request) {
         content: data.content,
         ejemplo: data.ejemplo,
         categoryId: categoryId,
+        userId: user.id,
       },
       include: { category: true },
     });

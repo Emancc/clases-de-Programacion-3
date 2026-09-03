@@ -20,10 +20,23 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model User {
+  id        String   @id
+  email     String   @unique
+  name      String?
+  avatar    String?
+  createdAt DateTime @default(now())
+
+  notes      Note[]
+  categories Category[]
+}
+
 model Category {
-  id    Int    @id @default(autoincrement())
-  title String @unique
-  notes Note[]
+  id     Int    @id @default(autoincrement())
+  title  String @unique
+  userId String
+  notes  Note[]
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Note {
@@ -33,6 +46,8 @@ model Note {
   content   String?
   createdAt DateTime @default(now())
 
-  categoryId Int?
-  category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  userId     String
+  categoryId Int
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
