@@ -1,6 +1,6 @@
 "use client";
 import Aside from "@/app/components/Aside";
-import { useNotes, NotesProvider } from "./NotesContext";
+import { useNotes, NotesProvider } from "../context/NotesContext";
 
 function LayoutContent({ children }) {
   const { getDynamicCategories } = useNotes();

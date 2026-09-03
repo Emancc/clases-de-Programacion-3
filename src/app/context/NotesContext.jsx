@@ -20,7 +20,7 @@ export function NotesProvider({ children }) {
         setNotes(notesRes.data);
         setCategories(categoriesRes.data);
       } catch (err) {
-        console.err("Error al obtener los datos", err);
+        console.error("Error al obtener los datos", err);
       } finally {
         setIsMounted(true);
       }

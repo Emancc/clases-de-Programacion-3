@@ -1,5 +1,5 @@
 "use client";
-import { useNotes } from "./NotesContext";
+import { useNotes } from "../context/NotesContext";
 import Link from "next/link";
 import React from "react";
 import NoteCard from "../components/NoteCard";

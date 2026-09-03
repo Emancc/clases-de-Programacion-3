@@ -1,5 +1,5 @@
 "use client";
-import { useNotes } from "../NotesContext";
+import { useNotes } from "../../context/NotesContext";
 import { useParams, useRouter } from "next/navigation";
 import NoteDetail from "@/app/components/NoteDetail";
 import React from "react";

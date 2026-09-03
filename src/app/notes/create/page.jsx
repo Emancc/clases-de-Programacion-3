@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useNotes } from "../NotesContext";
+import { useNotes } from "../../context/NotesContext";
 import { useRouter } from "next/navigation";
 
 import Link from "next/link";
